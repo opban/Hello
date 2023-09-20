@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>
+        Spice House
+    </title>
+    <style>
+        body {
+            background-color: #e0c03d;
+        }
+        h1 {
+            text-align: center;
+        }
+        h2 {
+            text-align: center;
+        }
+        p {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+
+        function submitOrder() {
+            let tempOutput = '';
+
+            let isChecked = document.getElementById('checkId').checked;
+            let textAlertsMessage;
+
+            if (isChecked) {
+                textAlertsMessage = "We will text you when your order is ready.";
+            }
+
+            else {
+                textAlertsMessage = "You have opted out of text alerts. Orders";
+                textAlertsMessage += " are usually ready for pickup in 30 minutes."
+            }
+
+            document.getElementById('orderSummaryId').innerHTML = tempOutput;
+        }
+        let appPriceFloat;
+        let bevPricefFloat;
+        let mainPriceFloat;
+        let subtotalFloat;
+        let selectedAppetizer = 'none';
+        let selectedMain = 'none';
+        let selectedBev = 'none';
+        /* Purpose: Change Display Image based on User Dropdown Selection
+         * Description: This function allows us to change the code in the div tags where the image is held. 
+         * By using this, we can change the image source based on the user dropdown selection.
+         */
+        function selectItem(foodType) {
+
+            let img = '';
+            if (foodType == 'appetizer') {
+                selectedAppetizer = document.getElementById('appetizerId').value;
+
+                if (selectedAppetizer == 'Paneer Puffs $5.00') {
+                    /*
+                    * Author/Description: Paneer Puff Picture from Aromatic Essence
+                    * Source: https://aromaticessence.co/paneer-puff/
+                    */
+                    img = '<img src="Images/appOnePic.jpg" width="150" height="100">';
+                }
+                else if (selectedAppetizer == 'Chole Bature $6.00') {
+                    /* Author / Description: Chole Bature Picture from Vogue
+                       * Source: https://www.vogue.in/vogue-cookbook/collection/punjabi-style-chole-bhature-recipe-to-make-at-home/amp/
+                    */
+                    img = '<img src="Images/appTwoPic.jpg" width="150" height="100">';
+                }
+                else if (selectedAppetizer == 'Chicken 65 $8.00') {
+                    /* Author / Description: Chicken 65 Picture from Swasthi's Recipies
+                       * Source: https://www.indianhealthyrecipes.com/chicken-65-recipe-no-egg-restaurant-style-chicken-recipes/
+                    */
+                    img = '<img src="Images/appThreePic.jpg" width="150" height="100">';
+
+                }
+
+                document.getElementById("appPicId").innerHTML = img;
+            }
+            if (foodType == 'main') {
+                selectedMain = document.getElementById('mainId').value;
+
+                if (selectedMain == 'Chicken Tikka Masala $12.00') {
+                    /* Author / Description: Chicken Tikka Masala Picture from Allrecipies
+                    * Source:    https://www.allrecipes.com/thmb/1ul-jdOz8H4b6BDrRcYOuNmJgt4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/239867chef-johns-chicken-tikka-masala-ddmfs-3X4-0572-e02a25f8c7b745459a9106e9eb13de10.jpg
+                    */
+                    img = '<img src="Images/mainOnePic.jpg" width="150" height="100">';
+                }
+                else if (selectedMain == 'Mutton Biriyani $14.00') {
+                    /* Author / Description: Mutton Biriyani Picture from Licious
+                     * Source:    https://www.licious.in/blog/wp-content/uploads/2022/06/mutton-hyderabadi-biryani-01.jpg
+                    */
+                    img = '<img src="Images/mainTwoPic.jpg" width="150" height="100">';
+                }
+                else if (selectedMain == 'Paneer + Naan $11.00') {
+                    /* Author / Description: Naan and Paneer Picture from Times of India
+                     * Source:    https://timesofindia.indiatimes.com/life-style/food-news/how-to-make-dhaba-style-naan-and-paneer/photostory/76045965.cms?from=mdr
+                    */
+                    img = '<img src="Images/mainThreePic.jpg" width="150" height="100">';
+
+                }
+
+                document.getElementById("mainPicId").innerHTML = img;
+            }
+            if (foodType == 'bev') {
+                selectedBev = document.getElementById('bevId').value;
+                if (selectedBev == 'Mirinda $2.25') {
+                    /*
+                     * Author/Description: Mirinda can picture from CrescentMarket
+                     * Source: https://crescentmarket.shop/products/miranda-orange-soda-250ml-can
+                     */
+                    img = '<img src="Images/bevOnePic.jpg" width="150" height="200">';
+                }
+                else if (selectedBev == 'Thumbs Up $2.25') {
+                    /* Author / Description: Thumbs Up Can Picture from Kesar Grocery
+                     * Source:    https://www.kesargrocery.com/thumbs-up-can.html
+                    */
+                    img = '<img src="Images/bevTwoPic.jpg" width="150" height="200">';
+                }
+                else if (selectedBev == 'Mango Maaza $2.50') {
+                    /* Author / Description: Mango Maaza Bottle Picture from Kesar Grocery
+                     * Source:    https://www.kesargrocery.com/maaza-mango-sku196793.html
+                    */
+                    img = '<img src="Images/bevThreePic.jpg" width="150" height="200">';
+
+                }
+
+                document.getElementById("bevPicId").innerHTML = img;
+            }
+        }
+        function calculateSubtotal() {
+            if (selectedAppetizer == "Chole Bature $6.00") {
+                appPriceFloat = 6;
+            }
+            else if (selectedAppetizer == 'Paneer Puffs $5.00') {
+                appPriceFloat = 5;
+
+            }
+            else if (selectedAppetizer == 'Chicken 65 $8.00') {
+                appPriceFloat = 8;
+
+            }
+            if (selectedMain == "Paneer + Naan $11.00") {
+                appPriceFloat = 11;
+            }
+            else if (selectedMain == 'Chicken Tikka Masala $12.00') {
+                appPriceFloat = 12;
+
+            }
+            else if (selectedMain == 'Mutton Biriyani $14.00') {
+                appPriceFloat = 14;
+
+            }
+            if (selectedBev == "Mirinda $2.25") {
+                appPriceFloat = 2.25;
+            }
+            else if (selectedBev == 'Thumbs Up $2.25') {
+                appPriceFloat = 2.25;
+
+            }
+            else if (selectedBev == 'Mango Maaza $2.50') {
+                appPriceFloat = 2.50;
+
+            }
+        }
+
+
+    </script>
+    <h1 id="f">Spice House</h1>
+    <h2 id="f">Lunch Menu</h2>
+    <p id="f">Pick an appetizer, main course, and beverage:</p>
+    <br>
+    Appetizer:
+    <!-- The next line allows the user to select an item, and onChange runs the "selectItem" function defined above -->
+    <select id="appetizerId" onChange="selectItem('appetizer')">
+        <option>None, Price $0.00</option>
+        <option>Chole Bature $6.00</option>
+        <option>Paneer Puffs $5.00</option>
+        <option>Chicken 65 $8.00</option>
+    </select>
+    <div id="appPicId"></div> <br>
+
+    Main Course:
+    <!-- The next line allows the user to select an item, and onChange runs the "selectItem" function defined above -->
+    <select id="mainId" onChange="selectItem('main')">
+        <option>None $0.00</option>
+        <option>Paneer + Naan $11.00</option>
+        <option>Chicken Tikka Masala $12.00</option>
+        <option>Mutton Biriyani $14.00</option>
+    </select>
+    <div id="mainPicId"></div> <br>
+
+    Beverage:
+    <!-- The next line allows the user to select an item, and onChange runs the "selectItem" function defined above -->
+    <select id="bevId" onChange="selectItem('bev')">
+        <option>None $0.00</option>
+        <option>Mirinda $2.25</option>
+        <option>Thumbs Up $2.25</option>
+        <option>Mango Maaza $2.50</option>
+    </select>
+    <div id="bevPicId"></div> <br>
+
+    Name: <input type="text" id="nameId" placeholder="Full Name">
+    Mobile Number: <input type="text" id="phoneId" placeholder="Mobile Phone">
+    <br> <br>
+    Check if you would like text alerts about your order: <input type="checkbox" id="checkId">
+    <br> <br>
+    Tip %: <input type="text" id="tipId" placeholder="Enter a Percentage Between 0 and 100" size="58">
+    <br> <br>
+    <script>        </script>
+    <input type="button" value="Submit Order" onClick="submitOrder()">
+    <div id='orderSummaryId'></div>
+    <br>
+
+</body>
+</html>
